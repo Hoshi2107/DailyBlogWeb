@@ -1,43 +1,44 @@
 <template>
   <Navbar />
+  <div class="container mt-5 pt-4">
+    <h1>Welcome to the Daily Blog Home Page</h1>
+    <div class="content">Today posts will be displayed here.</div>
 
-  <h1>Welcome to the Daily Blog Home Page</h1>
-  <div class="content">Today posts will be displayed here.</div>
+    <!-- Latest Posts Section -->
+    <section class="latest-posts py-5">
+      <div class="container">
+        <h2 class="fw-bold mb-4 text-center">Latest Posts</h2>
 
-  <!-- Latest Posts Section -->
-  <section class="latest-posts py-5">
-    <div class="container">
-      <h2 class="fw-bold mb-4 text-center">Latest Posts</h2>
+        <div class="row g-4">
+          <div class="col-md-4" v-for="post in latestPosts" :key="post.id">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text text-muted">
+                  {{ post.excerpt }}
+                </p>
+              </div>
 
-      <div class="row g-4">
-        <div class="col-md-4" v-for="post in latestPosts" :key="post.id">
-          <div class="card h-100 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ post.title }}</h5>
-              <p class="card-text text-muted">
-                {{ post.excerpt }}
-              </p>
-            </div>
-
-            <div class="card-footer bg-transparent border-0">
-              <router-link
-                :to="`/posts/${post.id}`"
-                class="btn btn-sm btn-outline-primary"
-              >
-                Read more →
-              </router-link>
+              <div class="card-footer bg-transparent border-0">
+                <router-link
+                  :to="`/posts/${post.id}`"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  Read more →
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="text-center mt-4">
-        <router-link to="/posts" class="btn btn-primary">
-          View All Posts
-        </router-link>
+        <div class="text-center mt-4">
+          <router-link to="/posts" class="btn btn-primary">
+            View All Posts
+          </router-link>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script setup>
@@ -80,4 +81,13 @@ const latestPosts = [
 ];
 </script>
 
-<style scoped></style>
+<style scoped>
+h1 {
+  text-align: center;
+  margin-top: 100px;
+  font-weight: bold;
+}
+.container {
+  background-color: lightgray;
+}
+</style>

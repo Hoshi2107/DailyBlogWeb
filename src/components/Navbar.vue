@@ -1,8 +1,11 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <nav
+    class="navbar navbar-expand-md navbar-light bg-primary bg-gradient fixed-top"
+  >
     <div class="container-fluid px-4">
-      <router-link class="navbar-brand fw-bold" to="/">
-        📝 DailyBlog
+      <router-link class="navbar-brand fw-bold" to="/DailyBlogHomePage">
+        <img :src="blogicon" alt="error" class="img" />
+        Daily Blog
       </router-link>
 
       <button
@@ -35,5 +38,20 @@
   </nav>
 </template>
 
-<script setup></script>
-<style scoped></style>
+<script setup>
+import blogicon from "../imgs/blogicon.png";
+</script>
+
+<style scoped>
+.img {
+  width: 80px;
+  height: 80px;
+  margin-left: 20px;
+  margin-right: 8px;
+}
+
+.navbar-nav .nav-link {
+  font-weight: bolder;
+  font-size: 16px;
+}
+</style>
