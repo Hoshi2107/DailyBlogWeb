@@ -17,11 +17,11 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
           <li class="nav-item">
-            <router-link class="nav-link" to="/posts">Posts</router-link>
+            <router-link class="nav-link" to="/posts">My posts</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/create-post">
-              Write
+              New post
             </router-link>
           </li>
           <li class="nav-item">
