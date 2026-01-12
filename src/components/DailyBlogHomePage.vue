@@ -73,7 +73,7 @@ const latestPosts = [
   },
   {
     id: 6,
-    title: "Quỷ khách",
+    title: "Quỷ xá",
     excerpt:
       "Một câu chuyện kinh dị rùng rợn về hành trình trong thế giới sương mù của Ninh Thu Thủy...",
   },
