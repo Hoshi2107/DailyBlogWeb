@@ -1,6 +1,8 @@
 <template>
   <Navbar />
+
   <div class="container mt-5 pt-4">
+    <Carousel />
     <h1>Welcome to the Daily Blog Home Page</h1>
     <div class="content">Today posts will be displayed here.</div>
 
@@ -42,6 +44,7 @@
 </template>
 
 <script setup>
+import Carousel from "./Carousel.vue";
 import Navbar from "./Navbar.vue";
 
 // Fake data for latest posts
@@ -84,7 +87,8 @@ const latestPosts = [
 <style scoped>
 h1 {
   text-align: center;
-  margin-top: 100px;
+  background-color: lightsalmon;
+  margin-top: 50px;
   font-weight: bold;
 }
 .container {
