@@ -1,5 +1,5 @@
 <template>
-  <Navbar />
+  <!-- <Navbar /> -->
 
   <div class="container mt-5 pt-4">
     <Carousel />
@@ -45,7 +45,7 @@
 
 <script setup>
 import Carousel from "./Carousel.vue";
-import Navbar from "./Navbar.vue";
+// import Navbar from "./Navbar.vue";
 
 // Fake data for latest posts
 const latestPosts = [

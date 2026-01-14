@@ -1,24 +1,56 @@
-<!-- <template>
-  <div class="container mt-4">
-    <h3>Login</h3>
+<template>
+  <div class="login-page d-flex justify-content-center align-items-center">
+    <div class="card p-4 shadow" style="width: 350px">
+      <h4 class="text-center mb-3">Login</h4>
 
-    <form @submit.prevent="login">
-      <input v-model="username" class="form-control mb-2" />
-      <button class="btn btn-primary">Login</button>
-    </form>
+      <input
+        v-model="username"
+        type="text"
+        class="form-control mb-3"
+        placeholder="Username"
+      />
+
+      <input
+        v-model="password"
+        type="password"
+        class="form-control mb-3"
+        placeholder="Password"
+      />
+
+      <button class="btn btn-primary w-100" @click="login">Login</button>
+    </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return { username: "" };
-  },
-  methods: {
-    login() {
-      localStorage.setItem("isLogin", "true");
-      this.$router.push("/");
-    },
-  },
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const username = ref("");
+const password = ref("");
+
+const login = () => {
+  if (!username.value || !password.value) {
+    alert("Nhập đủ đi ông ơi 😭");
+    return;
+  }
+
+  // fake login
+  localStorage.setItem(
+    "user",
+    JSON.stringify({
+      username: username.value,
+    })
+  );
+
+  router.push("/home");
 };
-</script> -->
+</script>
+
+<style scoped>
+.login-page {
+  height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+}
+</style>

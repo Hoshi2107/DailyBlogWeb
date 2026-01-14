@@ -1,9 +1,11 @@
 <script setup>
 import DailyBlogHomePage from "./components/DailyBlogHomePage.vue";
 import router from "./router";
+import Navbar from "./components/Navbar.vue";
 </script>
 
 <template>
+  <Navbar />
   <!-- <div>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />

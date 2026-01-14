@@ -3,11 +3,13 @@
     class="navbar navbar-expand-md navbar-light bg-primary bg-gradient fixed-top"
   >
     <div class="container-fluid px-4">
-      <router-link class="navbar-brand fw-bold" to="/DailyBlogHomePage">
+      <router-link class="navbar-brand fw-bold" to="/home">
         <img :src="blogicon" alt="error" class="img" />
-        Daily Blog
       </router-link>
 
+      <div class="navbar-brand">Daily Blog</div>
+
+      <!-- nav bar collapse when minimized -->
       <button
         class="navbar-toggler"
         type="button"
@@ -27,10 +29,39 @@
               New post
             </router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link class="btn btn-outline-light btn-sm" to="/login">
               Login
             </router-link>
+          </li> -->
+          <li class="nav-item" v-if="!user">
+            <router-link class="btn btn-outline-light btn-sm" to="/login">
+              Login
+            </router-link>
+          </li>
+
+          <li class="nav-item dropdown" v-else>
+            <a
+              class="btn btn-outline-light btn-sm dropdown-toggle"
+              href="#"
+              role="button"
+              data-bs-toggle="dropdown"
+            >
+              {{ user.username }}
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <router-link class="dropdown-item" to="/account">
+                  Account
+                </router-link>
+              </li>
+              <li>
+                <button class="dropdown-item text-danger" @click="logout">
+                  Logout
+                </button>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -40,18 +71,66 @@
 
 <script setup>
 import blogicon from "../imgs/blogicon.png";
+
+//fake login
+import { ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
+const user = ref(null);
+
+const loadUser = () => {
+  const savedUser = localStorage.getItem("user");
+  user.value = savedUser ? JSON.parse(savedUser) : null;
+};
+
+// load for the first time
+loadUser();
+
+// reload when route changes
+watch(
+  () => route.fullPath,
+  () => {
+    loadUser();
+  }
+);
+
+const logout = () => {
+  localStorage.removeItem("user");
+  user.value = null;
+  router.push("/login");
+};
 </script>
 
 <style scoped>
 .img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   margin-left: 20px;
   margin-right: 8px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .navbar-nav .nav-link {
   font-weight: bolder;
   font-size: 16px;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f8f9fa;
+  font-weight: bolder;
+}
+
+.navbar-nav {
+  height: 50px;
+}
+
+.navbar-brand {
+  color: #000000;
+  font-size: 50px;
+  font-weight: bolder;
+  font-family: "Times New Roman", Times, serif;
 }
 </style>
