@@ -44,7 +44,7 @@ const login = () => {
     })
   );
 
-  router.push("/home");
+  router.push("/");
 };
 </script>
 
