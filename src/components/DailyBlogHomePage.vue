@@ -40,6 +40,24 @@
         </div>
       </div>
     </section>
+    <!-- Pagination (static example) -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center" style="margin-bottom: 30px">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -49,8 +67,12 @@ import Carousel from "./Carousel.vue";
 import { useRoute } from "vue-router";
 import { computed, ref } from "vue";
 
+// const route = useRoute();
+// const router = useRouter();
+
+// const postsPerPage = 9;
 // Fake data for latest posts
-const latestPosts = [
+const latestPosts = ref([
   {
     id: 1,
     title: "Tôi muốn ăn tụy của cậu",
@@ -83,7 +105,7 @@ const latestPosts = [
     excerpt:
       "Một câu chuyện kinh dị rùng rợn về hành trình trong thế giới sương mù của Ninh Thu Thủy...",
   },
-];
+]);
 
 //search post
 // const filteredPosts = computed(() => {
@@ -101,6 +123,8 @@ const latestPosts = [
 //       p.excerpt.toLowerCase().includes(keyword)
 //   );
 // });
+
+//pagination
 </script>
 
 <style scoped>

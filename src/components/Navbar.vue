@@ -3,7 +3,7 @@
     class="navbar navbar-expand-md navbar-light bg-primary bg-gradient fixed-top"
   >
     <div class="container-fluid px-4">
-      <router-link class="navbar-brand fw-bold" to="/home">
+      <router-link class="navbar-brand fw-bold" to="/">
         <img :src="blogicon" alt="error" class="img" />
       </router-link>
 
