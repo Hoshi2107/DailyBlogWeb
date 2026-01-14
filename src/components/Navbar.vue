@@ -21,6 +21,18 @@
 
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-2">
+          <form class="d-flex me-3" @submit.prevent="handleSearch">
+            <input
+              v-model="keyword"
+              class="form-control form-control-sm me-2"
+              type="search"
+              placeholder="Search books..."
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-light btn-sm" type="submit">
+              Search
+            </button>
+          </form>
           <li class="nav-item">
             <router-link class="nav-link" to="/posts">My posts</router-link>
           </li>
@@ -34,6 +46,8 @@
               Login
             </router-link>
           </li> -->
+
+          <!-- Login -->
           <li class="nav-item" v-if="!user">
             <router-link class="btn btn-outline-light btn-sm" to="/login">
               Login
@@ -100,6 +114,18 @@ const logout = () => {
   localStorage.removeItem("user");
   user.value = null;
   router.push("/login");
+};
+
+//search post
+const keyword = ref("");
+
+const handleSearch = () => {
+  if (!keyword.value.trim()) return;
+
+  router.push({
+    path: "/home",
+    query: { search: keyword.value },
+  });
 };
 </script>
 

@@ -46,6 +46,8 @@
 <script setup>
 import Carousel from "./Carousel.vue";
 // import Navbar from "./Navbar.vue";
+import { useRoute } from "vue-router";
+import { computed, ref } from "vue";
 
 // Fake data for latest posts
 const latestPosts = [
@@ -82,6 +84,23 @@ const latestPosts = [
       "Một câu chuyện kinh dị rùng rợn về hành trình trong thế giới sương mù của Ninh Thu Thủy...",
   },
 ];
+
+//search post
+// const filteredPosts = computed(() => {
+//   const q = route.query.search;
+
+//   if (!q || !q.trim()) {
+//     return latestPosts.value;
+//   }
+
+//   const keyword = q.toLowerCase();
+
+//   return latestPosts.value.filter(
+//     (p) =>
+//       p.title.toLowerCase().includes(keyword) ||
+//       p.excerpt.toLowerCase().includes(keyword)
+//   );
+// });
 </script>
 
 <style scoped>
