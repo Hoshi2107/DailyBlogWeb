@@ -38,6 +38,7 @@
       </div>
 
       <hr class="border-secondary" />
+      <p style="font-size: large">Made with ❤️ by Hoshi</p>
     </div>
   </footer>
 </template>
