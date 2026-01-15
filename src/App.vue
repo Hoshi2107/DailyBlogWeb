@@ -15,7 +15,9 @@ import Navbar from "./components/Navbar.vue";
     </a>
   </div> -->
   <!-- <HelloWorld msg="Vite + Vue" /> -->
+  <!-- <div class="main-app"> -->
   <router-view></router-view>
+  <!-- </div> -->
 </template>
 
 <style scoped></style>
