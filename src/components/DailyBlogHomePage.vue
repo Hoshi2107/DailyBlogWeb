@@ -33,11 +33,11 @@
           </div>
         </div>
 
-        <div class="text-center mt-4">
+        <!-- <div class="text-center mt-4">
           <router-link to="/posts" class="btn btn-primary">
             View All Posts
           </router-link>
-        </div>
+        </div> -->
       </div>
     </section>
     <!-- Pagination (static example) -->

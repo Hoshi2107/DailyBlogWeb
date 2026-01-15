@@ -1,6 +1,11 @@
 <template>
   <!-- Carousel -->
-  <div id="blogCarousel" class="carousel slide">
+  <div
+    id="blogCarousel"
+    class="carousel slide"
+    data-bs-ride="carousel"
+    data-bs-interval="3000"
+  >
     <div class="carousel-inner">
       <div class="carousel-item active">
         <!-- <img src="..." class="d-block w-100" alt="..." /> -->
@@ -19,6 +24,7 @@
         <img :src="banner5" alt="error" class="d-block w-100" />
       </div>
     </div>
+
     <button
       class="carousel-control-prev"
       type="button"
