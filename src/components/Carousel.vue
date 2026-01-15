@@ -7,21 +7,46 @@
     data-bs-interval="3000"
   >
     <div class="carousel-inner">
+      <!-- Banner 1 -->
       <div class="carousel-item active">
         <!-- <img src="..." class="d-block w-100" alt="..." /> -->
-        <img :src="banner1" alt="error" class="d-block w-100" />
+        <img
+          :src="banner1"
+          alt="error"
+          class="d-block w-100 border border-dark rounded"
+        />
       </div>
+      <!-- Banner 2 -->
       <div class="carousel-item">
-        <img :src="banner2" alt="error" class="d-block w-100" />
+        <img
+          :src="banner2"
+          alt="error"
+          class="d-block w-100 border border-dark rounded"
+        />
       </div>
+      <!-- Banner 3 -->
       <div class="carousel-item">
-        <img :src="banner3" alt="error" class="d-block w-100" />
+        <img
+          :src="banner3"
+          alt="error"
+          class="d-block w-100 border border-dark rounded"
+        />
       </div>
+      <!-- Banner 4 -->
       <div class="carousel-item">
-        <img :src="banner4" alt="error" class="d-block w-100" />
+        <img
+          :src="banner4"
+          alt="error"
+          class="d-block w-100 border border-dark rounded"
+        />
       </div>
+      <!-- Banner 5 -->
       <div class="carousel-item">
-        <img :src="banner5" alt="error" class="d-block w-100" />
+        <img
+          :src="banner5"
+          alt="error"
+          class="d-block w-100 border border-dark rounded"
+        />
       </div>
     </div>
 

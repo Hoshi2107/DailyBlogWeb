@@ -130,7 +130,6 @@ const latestPosts = ref([
 <style scoped>
 h1 {
   text-align: center;
-  background-color: lightsalmon;
   margin-top: 0px;
   font-weight: bold;
 }
