@@ -32,7 +32,7 @@
             </button>
           </form>
           <li class="nav-item">
-            <router-link class="nav-link" to="/create-post">
+            <router-link class="nav-link" to="/new-post">
               New post
             </router-link>
           </li>

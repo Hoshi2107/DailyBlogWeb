@@ -67,13 +67,38 @@
             <div
               v-for="post in posts"
               :key="post.id"
-              class="border-bottom pb-3 mb-3"
+              class="border-bottom pb-3 mb-3 d-flex justify-content-between align-items-start"
             >
-              <h5>{{ post.title }}</h5>
-              <p class="text-muted mb-1">{{ post.excerpt }}</p>
-              <small>{{ post.date }} · {{ post.status }}</small>
-            </div>
+              <div>
+                <h5>{{ post.title }}</h5>
+                <p class="text-muted mb-1">{{ post.excerpt }}</p>
+                <small>{{ post.date }} · {{ post.status }}</small>
+              </div>
 
+              <!-- ACTION BUTTONS -->
+              <div class="ms-3 text-nowrap">
+                <router-link
+                  :to="`/post-detail/${post.id}`"
+                  class="btn btn-sm btn-outline-primary me-2"
+                >
+                  Xem
+                </router-link>
+
+                <router-link
+                  :to="`/edit-post/${post.id}`"
+                  class="btn btn-sm btn-outline-warning me-2"
+                >
+                  Sửa
+                </router-link>
+
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  @click="deletePost(post.id)"
+                >
+                  Xóa
+                </button>
+              </div>
+            </div>
             <p v-if="posts.length === 0" class="text-muted">
               Bạn chưa đăng bài viết nào.
             </p>
@@ -119,6 +144,16 @@ const onAvatarChange = (e) => {
     avatarPreview.value = URL.createObjectURL(file);
   }
 };
+
+// fake delete post function
+const deletePost = (id) => {
+  if (!confirm("Bạn có chắc muốn xóa bài viết này không?")) return;
+
+  posts.value = posts.value.filter((p) => p.id !== id);
+};
+
+// Here you would typically also make an API call to delete the post from the server
+// await axios.delete(`/api/posts/${id}`);
 </script>
 
 <style scoped>

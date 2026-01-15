@@ -52,6 +52,30 @@
       </p>
     </div>
   </div>
+
+  <!-- Modal for login required -->
+  <div class="modal fade" id="loginRequiredModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color: red; font-weight: bold">
+            Notification ! ! !
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <div class="modal-body">You need to login for your post ✍️</div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -78,6 +102,21 @@ const login = () => {
 
   router.push("/");
 };
+
+// Show modal if redirected due to login requirement
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { Modal } from "bootstrap";
+
+const route = useRoute();
+
+onMounted(() => {
+  if (route.query.reason === "needLogin") {
+    const modalEl = document.getElementById("loginRequiredModal");
+    const modal = new Modal(modalEl);
+    modal.show();
+  }
+});
 </script>
 
 <style scoped>
