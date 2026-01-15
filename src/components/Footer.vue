@@ -4,8 +4,8 @@
       <div class="row">
         <!-- Brand -->
         <div class="col-md-4 mb-3">
-          <h5 class="fw-bold">Daily Blog</h5>
-          <p class="text-muted small">
+          <h5 class="fw-bold" style="font-size: 50px">Daily Blog</h5>
+          <p>
             Nơi chia sẻ blog, truyện, light novel và những câu chuyện thường
             ngày.
           </p>
