@@ -1,7 +1,7 @@
 <template>
   <!-- <Navbar /> -->
 
-  <div class="container mt-5 pt-4">
+  <div class="container">
     <Carousel />
     <h1>Welcome to the Daily Blog Home Page</h1>
     <div class="content">Today posts will be displayed here.</div>
@@ -131,7 +131,7 @@ const latestPosts = ref([
 h1 {
   text-align: center;
   background-color: lightsalmon;
-  margin-top: 50px;
+  margin-top: 0px;
   font-weight: bold;
 }
 .container {

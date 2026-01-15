@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="navbar navbar-expand-md navbar-light bg-primary bg-gradient fixed-top"
-  >
+  <nav class="navbar navbar-expand-md navbar-light bg-primary bg-gradient">
     <div class="container-fluid px-4">
       <router-link class="navbar-brand fw-bold" to="/">
         <img :src="blogicon" alt="error" class="img" />

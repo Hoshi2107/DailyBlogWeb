@@ -57,6 +57,6 @@ import banner5 from "../imgs/banner5.jpg";
 <style scoped>
 .carousel-item img {
   height: 500px;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 </style>
