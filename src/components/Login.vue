@@ -32,7 +32,7 @@ const password = ref("");
 
 const login = () => {
   if (!username.value || !password.value) {
-    alert("Nhập đủ đi ông ơi 😭");
+    alert("Vui lòng nhập đầy đủ thông tin đăng nhập.");
     return;
   }
 

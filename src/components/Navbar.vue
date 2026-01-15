@@ -34,9 +34,6 @@
             </button>
           </form>
           <li class="nav-item">
-            <router-link class="nav-link" to="/posts">My posts</router-link>
-          </li>
-          <li class="nav-item">
             <router-link class="nav-link" to="/create-post">
               New post
             </router-link>
