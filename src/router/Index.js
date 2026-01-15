@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import DailyBlogHomePage from "../components/DailyBlogHomePage.vue";
 import Posts from "../components/Posts.vue";
 import Login from "../components/Login.vue";
+import Account from "../components/Account.vue";
+import Register from "../components/Register.vue";
 
 const routes = [
   {
@@ -23,6 +25,11 @@ const routes = [
     path: "/account",
     name: "Account",
     component: () => import("../components/Account.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () => import("../components/Register.vue"),
   },
 ];
 
