@@ -31,9 +31,12 @@
 
         <!-- Info -->
         <div class="col-md-4 mb-3">
-          <h6 class="fw-bold">Contact</h6>
-          <p class="small mb-1">Email: dailyblog@email.com</p>
-          <p class="small mb-0">© 2026 Daily Blog</p>
+          <h6 class="fw-bold" style="text-align: left">Contact</h6>
+          <p class="small mb-1" style="text-align: left">
+            Email: dailyblog@email.com
+          </p>
+          <p class="small mb-1" style="text-align: left">Phone: 0387 210 708</p>
+          <p class="small mb-0" style="text-align: left">© 2026 Daily Blog</p>
         </div>
       </div>
 
