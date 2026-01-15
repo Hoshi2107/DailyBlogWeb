@@ -36,11 +36,6 @@
               New post
             </router-link>
           </li>
-          <!-- <li class="nav-item">
-            <router-link class="btn btn-outline-light btn-sm" to="/login">
-              Login
-            </router-link>
-          </li> -->
 
           <!-- Login -->
           <li class="nav-item" v-if="!user">
@@ -49,7 +44,7 @@
             </router-link>
           </li>
 
-          <li class="nav-item dropdown" v-else>
+          <!-- <li class="nav-item dropdown" v-else>
             <a
               class="btn btn-outline-light btn-sm dropdown-toggle"
               href="#"
@@ -60,6 +55,31 @@
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <router-link class="dropdown-item" to="/account">
+                  Account
+                </router-link>
+              </li>
+              <li>
+                <button class="dropdown-item text-danger" @click="logout">
+                  Logout
+                </button>
+              </li>
+            </ul>
+          </li> -->
+
+          <li class="nav-item dropdown position-relative" v-else>
+            <button
+              class="btn btn-outline-light btn-sm"
+              @click="toggleDropdown"
+            >
+              {{ user.username }}
+            </button>
+
+            <ul
+              class="dropdown-menu dropdown-menu-end"
+              :class="{ show: showDropdown }"
+            >
               <li>
                 <router-link class="dropdown-item" to="/account">
                   Account
@@ -122,6 +142,17 @@ const handleSearch = () => {
     query: { search: keyword.value },
   });
 };
+
+const showDropdown = ref(false);
+
+const toggleDropdown = () => {
+  showDropdown.value = !showDropdown.value;
+};
+
+// auto close khi logout / route change
+watch(user, () => {
+  showDropdown.value = false;
+});
 </script>
 
 <style scoped>
@@ -153,5 +184,14 @@ const handleSearch = () => {
   font-size: 50px;
   font-weight: bolder;
   font-family: "Times New Roman", Times, serif;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: auto;
+  margin-top: 8px;
+  z-index: 1000;
 }
 </style>
