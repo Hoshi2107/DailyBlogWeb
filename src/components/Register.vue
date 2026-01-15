@@ -23,8 +23,8 @@
       </button>
 
       <p class="text-center mt-2 mb-0">
-        Đã có tài khoản?
-        <router-link to="/login">Đăng nhập</router-link>
+        Have an account?
+        <router-link to="/login">Login now</router-link>
       </p>
     </div>
   </div>

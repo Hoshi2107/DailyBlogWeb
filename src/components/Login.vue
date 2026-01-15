@@ -45,9 +45,9 @@
 
       <!-- Link to Register page -->
       <p class="text-center mb-0">
-        Chưa có tài khoản?
+        Don't have an account?
         <router-link to="/register" class="text-decoration-none fw-semibold">
-          Tạo tài khoản
+          Create one here
         </router-link>
       </p>
     </div>
