@@ -13,17 +13,17 @@
 
         <!-- Links -->
         <div class="col-md-4 mb-3">
-          <h6 class="fw-bold">Quick Links</h6>
+          <h6 class="fw-bold">Đường dẫn</h6>
           <ul class="list-unstyled">
-            <li><router-link to="/" class="footer-link">Home</router-link></li>
+            <li><router-link to="/" class="footer-link">Trang chủ</router-link></li>
             <li>
               <router-link to="/new-post" class="footer-link"
-                >New Post</router-link
+                >Tạo bài viết mới</router-link
               >
             </li>
             <li>
               <router-link to="/account" class="footer-link"
-                >Account</router-link
+                >Tài khoản</router-link
               >
             </li>
           </ul>
@@ -31,7 +31,7 @@
 
         <!-- Info -->
         <div class="col-md-4 mb-3">
-          <h6 class="fw-bold" style="text-align: left">Contact</h6>
+          <h6 class="fw-bold" style="text-align: left">Liên hệ</h6>
           <p class="small mb-1" style="text-align: left">
             Email: dailyblog@email.com
           </p>
@@ -40,8 +40,8 @@
         </div>
       </div>
 
-      <hr class="border-secondary" />
-      <p style="font-size: large">Made with ❤️ by Hoshi</p>
+      <!-- <hr class="border-secondary" />
+      <p style="font-size: large">Made with ❤️ by Hoshi</p> -->
     </div>
   </footer>
 </template>

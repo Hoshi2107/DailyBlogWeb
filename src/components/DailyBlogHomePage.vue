@@ -263,6 +263,6 @@ h1 {
   font-weight: bold;
 }
 .container {
-  background-color: lightgray;
+  background-color: white ;
 }
 </style>
