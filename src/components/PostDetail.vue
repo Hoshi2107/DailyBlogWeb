@@ -34,11 +34,11 @@
           <textarea
             class="form-control mb-2"
             rows="3"
-            placeholder="Your comment..."
+            placeholder="Viết bình luận..."
             v-model="newComment"
           ></textarea>
           <button class="btn btn-primary" @click="addComment">
-            Comment this post
+            Bình luận bài viết
           </button>
         </div>
       </div>

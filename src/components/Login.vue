@@ -25,29 +25,31 @@
 <template>
   <div class="login-page d-flex justify-content-center align-items-center">
     <div class="card p-4 shadow" style="width: 350px">
-      <h4 class="text-center mb-3">Login</h4>
+      <h4 class="text-center mb-3">Đăng nhập</h4>
 
       <input
         v-model="username"
         type="text"
         class="form-control mb-3"
-        placeholder="Username"
+        placeholder="Tên người dùng"
       />
 
       <input
         v-model="password"
         type="password"
         class="form-control mb-3"
-        placeholder="Password"
+        placeholder="Mật khẩu"
       />
 
-      <button class="btn btn-primary w-100 mb-2" @click="login">Login</button>
+      <button class="btn btn-primary w-100 mb-2" @click="login">
+        Đăng nhập
+      </button>
 
       <!-- Link to Register page -->
       <p class="text-center mb-0">
-        Don't have an account?
+        Chưa có tài khoản?
         <router-link to="/register" class="text-decoration-none fw-semibold">
-          Create one here
+          Tạo tài khoản
         </router-link>
       </p>
     </div>
@@ -59,7 +61,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" style="color: red; font-weight: bold">
-            Notification ! ! !
+            Thông báo ! ! !
           </h5>
           <button
             type="button"
@@ -68,7 +70,7 @@
           ></button>
         </div>
 
-        <div class="modal-body">You need to login for your post ✍️</div>
+        <div class="modal-body">Bạn cần đăng nhập để đăng bài viết ✍️</div>
 
         <div class="modal-footer">
           <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
@@ -97,7 +99,7 @@ const login = () => {
     "user",
     JSON.stringify({
       username: username.value,
-    })
+    }),
   );
 
   router.push("/");

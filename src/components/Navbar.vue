@@ -24,7 +24,7 @@
               v-model="keyword"
               class="form-control form-control-sm me-2"
               type="search"
-              placeholder="Search books..."
+              placeholder="Tìm kiếm bài viết..."
               aria-label="Search"
             />
             <button class="btn btn-outline-light btn-sm" type="submit">
@@ -33,14 +33,14 @@
           </form>
           <li class="nav-item">
             <router-link class="nav-link" to="/new-post">
-              New post
+              Đăng bài viết
             </router-link>
           </li>
 
           <!-- Login -->
           <li class="nav-item" v-if="!user">
             <router-link class="btn btn-outline-light btn-sm" to="/login">
-              Login
+              Đăng nhập
             </router-link>
           </li>
 
@@ -82,12 +82,12 @@
             >
               <li>
                 <router-link class="dropdown-item" to="/account">
-                  Account
+                  Tài khoản
                 </router-link>
               </li>
               <li>
                 <button class="dropdown-item text-danger" @click="logout">
-                  Logout
+                  Đăng xuất
                 </button>
               </li>
             </ul>
@@ -122,7 +122,7 @@ watch(
   () => route.fullPath,
   () => {
     loadUser();
-  }
+  },
 );
 
 const logout = () => {

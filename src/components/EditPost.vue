@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5 pt-4">
-    <h3 class="mb-4">Editing Post</h3>
+    <h3 class="mb-4">Sửa bài viết</h3>
 
     <input
       v-model="post.title"
@@ -15,8 +15,8 @@
       placeholder="What's on your mind?"
     ></textarea>
 
-    <button class="btn btn-primary">Save changes</button>
-    <button class="btn btn-secondary ms-2">Cancel</button>
+    <button class="btn btn-primary">Lưu thay đổi</button>
+    <button class="btn btn-secondary ms-2">Hủy bỏ</button>
     <!-- <button class="btn btn-danger ms-2">Delete this post</button> -->
   </div>
 </template>

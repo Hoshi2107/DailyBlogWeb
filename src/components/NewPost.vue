@@ -2,24 +2,24 @@
   <div class="container mt-5 pt-4">
     <div class="card shadow-sm">
       <div class="card-body">
-        <h3 class="mb-4">Create a new post</h3>
+        <h3 class="mb-4">Tạo bài viết mới</h3>
 
         <input
           v-model="title"
           class="form-control mb-3"
-          placeholder="Post Title"
+          placeholder="Tiêu đề bài viết"
         />
 
         <textarea
           v-model="content"
           class="form-control mb-3"
           rows="8"
-          placeholder="What's on your mind?"
+          placeholder="Chia sẻ cảm nghĩ của bạn..."
         ></textarea>
 
         <div class="d-flex justify-content-end">
-          <button class="btn btn-secondary me-2" @click="cancel">Cancel</button>
-          <button class="btn btn-primary" @click="submitPost">Post</button>
+          <button class="btn btn-secondary me-2" @click="cancel">Hủy</button>
+          <button class="btn btn-primary" @click="submitPost">Đăng bài</button>
         </div>
       </div>
     </div>

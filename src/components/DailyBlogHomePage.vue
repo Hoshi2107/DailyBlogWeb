@@ -3,12 +3,12 @@
 
   <div class="container">
     <Carousel />
-    <h1>Welcome to the Daily Blog Home Page</h1>
+    <!-- <h1>Welcome to the Daily Blog Home Page</h1> -->
 
     <!-- Latest Posts Section -->
     <section class="latest-posts py-5">
       <div class="container">
-        <h2 class="fw-bold mb-4 text-center">Latest Posts</h2>
+        <h2 class="fw-bold mb-4 text-center">Bài viết mới nhất</h2>
 
         <div class="row g-4">
           <div class="col-md-4" v-for="post in paginatedPosts" :key="post.id">
@@ -31,7 +31,7 @@
                   :to="{ name: 'PostDetail', params: { id: post.id } }"
                   class="btn btn-sm btn-outline-primary"
                 >
-                  Read more →
+                  Đọc thêm →
                 </router-link>
               </div>
             </div>
@@ -242,7 +242,7 @@ const postsPerPage = 9;
 const currentPage = ref(1);
 
 const totalPages = computed(() =>
-  Math.ceil(latestPosts.value.length / postsPerPage)
+  Math.ceil(latestPosts.value.length / postsPerPage),
 );
 
 const paginatedPosts = computed(() => {
@@ -263,6 +263,6 @@ h1 {
   font-weight: bold;
 }
 .container {
-  background-color: white ;
+  background-color: white;
 }
 </style>
