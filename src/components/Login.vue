@@ -1,37 +1,13 @@
-<!-- <template>
-  <div class="login-page d-flex justify-content-center align-items-center">
-    <div class="card p-4 shadow" style="width: 350px">
-      <h4 class="text-center mb-3">Login</h4>
-
-      <input
-        v-model="username"
-        type="text"
-        class="form-control mb-3"
-        placeholder="Username"
-      />
-
-      <input
-        v-model="password"
-        type="password"
-        class="form-control mb-3"
-        placeholder="Password"
-      />
-
-      <button class="btn btn-primary w-100" @click="login">Login</button>
-    </div>
-  </div>
-</template> -->
-
 <template>
   <div class="login-page d-flex justify-content-center align-items-center">
     <div class="card p-4 shadow" style="width: 350px">
       <h4 class="text-center mb-3">Đăng nhập</h4>
 
       <input
-        v-model="username"
-        type="text"
+        v-model="email"
+        type="email"
         class="form-control mb-3"
-        placeholder="Tên người dùng"
+        placeholder="Email"
       />
 
       <input
@@ -81,36 +57,38 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { Modal } from "bootstrap";
+// import { login as loginApi } from "@/services/authService";
+import { login as loginApi } from "../services/authService";
 
 const router = useRouter();
-const username = ref("");
+const route = useRoute();
+
+const email = ref("");
 const password = ref("");
 
-const login = () => {
-  if (!username.value || !password.value) {
+const login = async () => {
+  if (!email.value || !password.value) {
     alert("Vui lòng nhập đầy đủ thông tin đăng nhập.");
     return;
   }
 
-  // fake login
-  localStorage.setItem(
-    "user",
-    JSON.stringify({
-      username: username.value,
-    }),
-  );
+  try {
+    const res = await loginApi({
+      email: email.value,
+      password: password.value,
+    });
 
-  router.push("/");
+    // lưu user vào localStorage
+    localStorage.setItem("user", JSON.stringify(res.data));
+
+    router.push("/");
+  } catch (err) {
+    alert("Sai email hoặc mật khẩu.");
+  }
 };
-
-// Show modal if redirected due to login requirement
-import { onMounted } from "vue";
-import { useRoute } from "vue-router";
-import { Modal } from "bootstrap";
-
-const route = useRoute();
 
 onMounted(() => {
   if (route.query.reason === "needLogin") {

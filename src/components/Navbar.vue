@@ -73,7 +73,7 @@
               class="btn btn-outline-light btn-sm"
               @click="toggleDropdown"
             >
-              {{ user.username }}
+              {{ user.fullName }}
             </button>
 
             <ul
