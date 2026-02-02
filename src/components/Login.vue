@@ -90,12 +90,28 @@ const login = async () => {
   }
 };
 
-onMounted(() => {
-  if (route.query.reason === "needLogin") {
-    const modalEl = document.getElementById("loginRequiredModal");
-    const modal = new Modal(modalEl);
-    modal.show();
+// onMounted(() => {
+//   if (route.query.reason === "needLogin") {
+//     const modalEl = document.getElementById("loginRequiredModal");
+//     const modal = new Modal(modalEl);
+//     modal.show();
+//   }
+// });
+
+router.beforeEach((to, from, next) => {
+  const user = localStorage.getItem("user");
+
+  const publicPages = ["/login", "/register"];
+  const authRequired = !publicPages.includes(to.path);
+
+  if (authRequired && !user) {
+    return next({
+      path: "/login",
+      query: { reason: "needLogin" },
+    });
   }
+
+  next();
 });
 </script>
 

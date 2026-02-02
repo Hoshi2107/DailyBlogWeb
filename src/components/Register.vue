@@ -4,9 +4,9 @@
       <h4 class="text-center mb-3">Register</h4>
 
       <input
-        v-model="username"
+        v-model="fullName"
         class="form-control mb-3"
-        placeholder="Username"
+        placeholder="Full Name"
       />
 
       <input
@@ -31,8 +31,8 @@
       </button>
 
       <p class="text-center mt-2 mb-0">
-        Have an account?
-        <router-link to="/login">Login now</router-link>
+        Đã có tài khoản?
+        <router-link to="/login">Đăng nhập ngay !</router-link>
       </p>
     </div>
   </div>
@@ -67,43 +67,14 @@
   <div class="modal-backdrop fade show" v-if="showModal"></div>
 </template>
 
-<!-- <script setup>
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-const username = ref("");
-const email = ref("");
-const password = ref("");
-
-const register = () => {
-  if (!username.value || !email.value || !password.value) {
-    alert("Vui lòng nhập đầy đủ thông tin");
-    return;
-  }
-
-  // fake register process
-  const user = {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-  };
-
-  localStorage.setItem("registeredUser", JSON.stringify(user));
-
-  alert("Tạo tài khoản thành công!");
-  router.push("/login");
-};
-</script> -->
-
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
-const username = ref("");
+// form data
+const fullName = ref("");
 const email = ref("");
 const password = ref("");
 
@@ -117,8 +88,9 @@ const isEmailValid = computed(() => {
   return email.value.endsWith("@gmail.com");
 });
 
+// enable register button
 const canRegister = computed(() => {
-  return username.value && email.value && password.value && isEmailValid.value;
+  return fullName.value && email.value && password.value && isEmailValid.value;
 });
 
 const openModal = (title, message) => {
@@ -131,32 +103,49 @@ const closeModal = () => {
   showModal.value = false;
 };
 
-const register = () => {
+// register function
+const register = async () => {
   if (!isEmailValid.value) {
     openModal("Email không hợp lệ", "Email phải kết thúc bằng @gmail.com");
     return;
   }
 
-  if (!username.value || !password.value) {
-    openModal("Thiếu thông tin", "Vui lòng nhập đầy đủ Username và Password");
+  if (!fullName.value || !email.value || !password.value) {
+    openModal("Thiếu thông tin", "Vui lòng nhập đầy đủ thông tin");
     return;
   }
 
-  const user = {
-    username: username.value,
-    email: email.value,
-    password: password.value,
-  };
+  try {
+    const response = await fetch("https://localhost:7181/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fullName: fullName.value,
+        email: email.value,
+        password: password.value,
+      }),
+    });
 
-  localStorage.setItem("registeredUser", JSON.stringify(user));
+    if (!response.ok) {
+      const error = await response.text();
+      openModal("Lỗi", error);
+      return;
+    }
 
-  openModal("Notification", "Create account successfully ! ! !");
+    openModal("Thành công", "Tạo tài khoản thành công!");
 
-  setTimeout(() => {
-    closeModal();
-    router.push("/login");
-  }, 1500);
+    setTimeout(() => {
+      closeModal();
+      router.push("/login");
+    }, 1500);
+  } catch (error) {
+    openModal("Server error", "Không kết nối được server");
+  }
 };
+
+// auto redirect to login after success registration
 </script>
 
 <style scoped>
