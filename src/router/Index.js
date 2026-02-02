@@ -43,24 +43,24 @@ const routes = [
     path: "/posts/:id",
     name: "PostDetail",
     component: () => import("../components/PostDetail.vue"),
+    scrollBehavior() {
+      return { top: 0 };
+    },
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+  history: createWebHistory(),
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition; // khi bấm back sẽ giữ vị trí cũ
+    }
+    return { top: 0 }; // khi chuyển page mới thì lên đầu trang
+  },
 });
-
-// router.beforeEach((to, from, next) => {
-//   const user = localStorage.getItem("user");
-
-//   if (to.path === "/new-post" && !user) {
-//     alert("Bạn cần đăng nhập để tạo bài viết");
-//     next("/login");
-//   } else {
-//     next();
-//   }
-// });
 
 router.beforeEach((to, from, next) => {
   const user = localStorage.getItem("user");

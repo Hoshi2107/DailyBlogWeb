@@ -11,12 +11,16 @@
         <h2 class="fw-bold mb-4 text-center">Bài viết mới nhất</h2>
 
         <div class="row g-4">
-          <div class="col-md-4" v-for="post in paginatedPosts" :key="post.id">
+          <div
+            class="col-md-4"
+            v-for="post in paginatedPosts"
+            :key="post.postID"
+          >
             <div class="card h-100 shadow-sm">
               <div class="card-body">
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text text-muted">
-                  {{ post.excerpt }}
+                  {{ truncate(post.description, 50) }}
                 </p>
               </div>
 
@@ -28,7 +32,7 @@
                   Read more →
                 </router-link> -->
                 <router-link
-                  :to="{ name: 'PostDetail', params: { id: post.id } }"
+                  :to="{ name: 'PostDetail', params: { id: post.postID } }"
                   class="btn btn-sm btn-outline-primary"
                 >
                   Đọc thêm →
@@ -73,152 +77,26 @@
 import Carousel from "./Carousel.vue";
 // import Navbar from "./Navbar.vue";
 import { useRoute } from "vue-router";
-import { computed, ref } from "vue";
+// import { computed, ref } from "vue";
 
 // const route = useRoute();
 // const router = useRouter();
 
 // const postsPerPage = 9;
-// Fake data for latest posts
-const latestPosts = ref([
-  {
-    id: 1,
-    title: "Tôi muốn ăn tụy của cậu",
-    excerpt: "Một câu chuyện cảm động về cuộc sống và cái chết...",
-  },
-  {
-    id: 2,
-    title: "Cổ Chân Nhân",
-    excerpt:
-      "Hành trình cùng những câu chuyện ngẫm nhân sinh trên con đường nghịch thiên cải mệnh...",
-  },
-  {
-    id: 3,
-    title: "Sổ tay lập trình C#",
-    excerpt: "Các funtion cơ bản và nâng cao trong lập trình C#...",
-  },
-  {
-    id: 4,
-    title: "Làm đĩ",
-    excerpt: "Một cuốn sách châm biếm hay từ góc nhìn của Nam Cao",
-  },
-  {
-    id: 5,
-    title: "Đắc nhân tâm",
-    excerpt: "Những nguyên tắc vàng trong giao tiếp và xây dựng mối quan hệ...",
-  },
-  {
-    id: 6,
-    title: "Quỷ xá",
-    excerpt:
-      "Một câu chuyện kinh dị rùng rợn về hành trình trong thế giới sương mù của Ninh Thu Thủy...",
-  },
-  {
-    id: 7,
-    title: "Tôi muốn ăn tụy của cậu",
-    excerpt:
-      "Một câu chuyện cảm động về sự sống, cái chết và những điều chưa kịp nói...",
-  },
-  {
-    id: 8,
-    title: "Cổ Chân Nhân",
-    excerpt:
-      "Thiên địa bất nhân, lấy vạn vật làm chó rơm. Con đường nghịch thiên cải mệnh...",
-  },
-  {
-    id: 9,
-    title: "Re:Zero − Bắt đầu lại ở thế giới khác",
-    excerpt:
-      "Mỗi lần chết là một lần quay lại. Nhưng nỗi đau thì không bao giờ reset...",
-  },
-  {
-    id: 10,
-    title: "Sword Art Online",
-    excerpt:
-      "Khi game không còn là game, cái chết là thật, và đăng xuất là bất khả thi...",
-  },
-  {
-    id: 11,
-    title: "Overlord",
-    excerpt:
-      "Khi server đóng cửa nhưng bạn vẫn còn mắc kẹt trong game với sức mạnh tối thượng...",
-  },
-  {
-    id: 12,
-    title: "No Game No Life",
-    excerpt:
-      "Một thế giới nơi mọi thứ được quyết định bằng game, và hai thiên tài bước vào cuộc chơi.",
-  },
-  {
-    id: 13,
-    title: "Classroom of the Elite",
-    excerpt:
-      "Ngôi trường ưu tú, nơi con người bị phân loại và thao túng bằng trí tuệ.",
-  },
-  {
-    id: 14,
-    title: "Your Name",
-    excerpt:
-      "Hai con người xa lạ, hoán đổi thân xác và tìm thấy nhau qua thời gian.",
-  },
-  {
-    id: 15,
-    title: "Attack on Titan",
-    excerpt: "Tự do là gì khi nhân loại bị nhốt sau những bức tường khổng lồ?",
-  },
-  {
-    id: 16,
-    title: "86 - Eighty Six",
-    excerpt:
-      "Cuộc chiến không người lái, nhưng những người bị bỏ rơi vẫn đang chết mỗi ngày.",
-  },
-  {
-    id: 17,
-    title: "Mushoku Tensei",
-    excerpt:
-      "Một kẻ thất bại tái sinh và quyết tâm sống nghiêm túc ở thế giới mới.",
-  },
-  {
-    id: 18,
-    title: "Monogatari Series",
-    excerpt:
-      "Những hiện tượng siêu nhiên gắn liền với tâm lý và tổn thương con người.",
-  },
-  {
-    id: 19,
-    title: "The Beginning After The End",
-    excerpt:
-      "Một vị vua tái sinh, mang theo ký ức và tham vọng của kiếp trước.",
-  },
-  {
-    id: 20,
-    title: "Solo Leveling",
-    excerpt: "Từ thợ săn yếu nhất trở thành kẻ mạnh nhất, từng bước một.",
-  },
-  {
-    id: 21,
-    title: "Spice and Wolf",
-    excerpt:
-      "Chuyến hành trình buôn bán, tri thức và mối quan hệ giữa người và sói.",
-  },
-  {
-    id: 22,
-    title: "Oshi no Ko",
-    excerpt:
-      "Ánh hào quang của giới giải trí che giấu những bi kịch không ai thấy.",
-  },
-  {
-    id: 23,
-    title: "Violet Evergarden",
-    excerpt:
-      "Hành trình học cách hiểu cảm xúc và ý nghĩa của lời nói: 'Anh yêu em'.",
-  },
-  {
-    id: 24,
-    title: "The Rising of the Shield Hero",
-    excerpt: "Một anh hùng bị phản bội, phải đứng lên từ con số âm.",
-  },
-]);
+
+// Take data from postService
+import { ref, onMounted, computed } from "vue";
+import { getPosts } from "../services/postService";
+
+const posts = ref([]);
+
+onMounted(async () => {
+  try {
+    posts.value = await getPosts();
+  } catch (error) {
+    console.error("Lỗi load post:", error);
+  }
+});
 
 //search post
 // const filteredPosts = computed(() => {
@@ -241,18 +119,22 @@ const latestPosts = ref([
 const postsPerPage = 9;
 const currentPage = ref(1);
 
-const totalPages = computed(() =>
-  Math.ceil(latestPosts.value.length / postsPerPage),
-);
+const totalPages = computed(() => Math.ceil(posts.value.length / postsPerPage));
 
 const paginatedPosts = computed(() => {
   const start = (currentPage.value - 1) * postsPerPage;
-  return latestPosts.value.slice(start, start + postsPerPage);
+  return posts.value.slice(start, start + postsPerPage);
 });
 
 const changePage = (page) => {
   if (page < 1 || page > totalPages.value) return;
   currentPage.value = page;
+};
+
+// truncate text for description
+const truncate = (text, length) => {
+  if (!text) return "";
+  return text.length > length ? text.substring(0, length) + "..." : text;
 };
 </script>
 

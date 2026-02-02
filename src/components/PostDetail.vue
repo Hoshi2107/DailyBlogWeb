@@ -4,10 +4,13 @@
     <div class="card mb-4 shadow-sm" v-if="post">
       <div class="card-body">
         <h2 class="fw-bold">{{ post.title }}</h2>
-        <p class="text-muted mb-2">{{ post.author }} · {{ post.createdAt }}</p>
+        <p class="text-muted mb-2">
+          {{ post.author }} · {{ formatDate(post.postDate) }} ·
+          {{ post.category }}
+        </p>
         <hr />
         <p class="fs-6" style="line-height: 1.8">
-          {{ post.content }}
+          {{ post.description }}
         </p>
       </div>
     </div>
@@ -47,59 +50,30 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { getPostById } from "../services/postService";
 
 const route = useRoute();
-const postId = Number(route.params.id);
-
-// FAKE POSTS (sau này thay bằng API)
-const fakePosts = [
-  {
-    id: 1,
-    title: "Tôi muốn ăn tụy của cậu",
-    author: "Hoshi",
-    content:
-      "Một câu chuyện cảm động về cuộc sống và cái chết. Đây là nội dung chi tiết của bài viết...",
-    createdAt: "15/01/2026",
-  },
-  {
-    id: 2,
-    title: "Cổ Chân Nhân",
-    author: "Hoshi",
-    content:
-      "Hành trình nghịch thiên cải mệnh, tranh đấu sinh tồn trong tu chân giới...",
-    createdAt: "16/01/2026",
-  },
-];
-
-// tìm bài viết theo id
-const post = fakePosts.find((p) => p.id === postId);
-
-// FAKE COMMENTS
-const comments = ref([
-  {
-    id: 1,
-    username: "Nguyễn Văn B",
-    content: "Bài này đọc cuốn thật",
-    createdAt: "15/01/2026 10:30",
-  },
-]);
-
+const post = ref(null);
+const comments = ref([]);
 const newComment = ref("");
-const currentUser = "Hoshi"; // fake login
 
-const addComment = () => {
-  if (!newComment.value.trim()) return;
+onMounted(async () => {
+  try {
+    const data = await getPostById(route.params.id);
+    post.value = data;
+  } catch (error) {
+    console.error("Lỗi load chi tiết:", error);
+  }
+});
 
-  comments.value.unshift({
-    id: Date.now(),
-    username: currentUser,
-    content: newComment.value,
-    createdAt: new Date().toLocaleString(),
-  });
-
-  newComment.value = "";
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
 };
 </script>
 
