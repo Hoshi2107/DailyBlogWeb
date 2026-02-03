@@ -78,7 +78,7 @@
               <!-- ACTION BUTTONS -->
               <div class="ms-3 text-nowrap">
                 <router-link
-                  :to="`/post-detail/${post.id}`"
+                  :to="`/posts/${post.id}`"
                   class="btn btn-sm btn-outline-primary me-2"
                 >
                   Xem
