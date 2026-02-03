@@ -50,7 +50,9 @@
                 />
               </div>
 
-              <button class="btn btn-primary w-100">Lưu thay đổi</button>
+              <button class="btn btn-primary w-100" @click="saveChanges">
+                Lưu thay đổi
+              </button>
             </form>
           </div>
         </div>
@@ -153,10 +155,38 @@
 
 const user = JSON.parse(localStorage.getItem("user"));
 
-const onAvatarChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    avatarPreview.value = URL.createObjectURL(file);
+// Avatar Upload Logic
+const saveChanges = async () => {
+  if (form.password !== form.confirmPassword) {
+    alert("Mật khẩu không khớp");
+    return;
+  }
+
+  try {
+    const res = await fetch(`https://localhost:7181/api/user/${user.userID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: JSON.stringify({
+        fullName: form.username,
+        email: form.email,
+        password: form.password,
+        avatarUrl: avatarPreview.value,
+      }),
+    });
+
+    const text = await res.text();
+    console.log("STATUS:", res.status);
+    console.log("RESPONSE:", text);
+
+    if (!res.ok) throw new Error(text);
+
+    alert("Cập nhật thành công");
+  } catch (err) {
+    console.error("FULL ERROR:", err);
+    alert("Cập nhật thất bại");
   }
 };
 
@@ -226,8 +256,7 @@ onMounted(async () => {
 
     form.username = userData.fullName;
     form.email = userData.email;
-    avatarPreview.value =
-      userData.avatarUrl || "https://via.placeholder.com/120";
+    avatarPreview.value = `https://localhost:7181${userData.avatarUrl}`;
 
     // LOAD POSTS
     const postRes = await fetch(
