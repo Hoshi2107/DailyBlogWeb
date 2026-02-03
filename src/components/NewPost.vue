@@ -10,6 +10,18 @@
           placeholder="Tiêu đề bài viết"
         />
 
+        <!-- Category -->
+        <select v-model="categoryID" class="form-select mb-3">
+          <option disabled value="">-- Chọn danh mục --</option>
+          <option
+            v-for="cat in categories"
+            :key="cat.categoryID"
+            :value="cat.categoryID"
+          >
+            {{ cat.categoryName }}
+          </option>
+        </select>
+
         <textarea
           v-model="content"
           class="form-control mb-3"
@@ -27,34 +39,63 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const title = ref("");
 const content = ref("");
+const categoryID = ref("");
+const categories = ref([]);
 
-const submitPost = () => {
-  if (!title.value.trim() || !content.value.trim()) {
-    alert("Please make sure all fields are filled out.");
+const user = JSON.parse(localStorage.getItem("user"));
+
+// Load categories
+onMounted(async () => {
+  try {
+    const res = await fetch("https://localhost:7181/api/category");
+    if (!res.ok) throw new Error();
+    categories.value = await res.json();
+  } catch (err) {
+    console.log(err);
+    alert("Không tải được danh mục");
+  }
+});
+
+// Submit post
+const submitPost = async () => {
+  if (!title.value || !content.value || !categoryID.value) {
+    alert("Vui lòng nhập đầy đủ thông tin");
     return;
   }
 
-  // FAKE save post
-  const newPost = {
-    id: Date.now(),
-    title: title.value,
-    content: content.value,
-    author: JSON.parse(localStorage.getItem("user"))?.username || "Guest",
-    createdAt: new Date().toLocaleString(),
-  };
+  try {
+    const res = await fetch("https://localhost:7181/api/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: title.value,
+        description: content.value,
+        userID: user.userID,
+        categoryID: parseInt(categoryID.value),
+      }),
+    });
 
-  console.log("POST CREATED:", newPost);
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.log(errorText);
+      throw new Error("Create failed");
+    }
 
-  alert("Your post has been published!");
-
-  router.push("/account"); // hoặc "/"
+    alert("Đăng bài thành công 🎉");
+    router.push("/account");
+  } catch (err) {
+    console.log(err);
+    alert("Đăng bài thất bại");
+  }
 };
 
 const cancel = () => {
