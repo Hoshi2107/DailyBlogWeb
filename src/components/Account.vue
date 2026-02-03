@@ -72,7 +72,7 @@
               <div>
                 <h5>{{ post.title }}</h5>
                 <p class="text-muted mb-1">{{ post.excerpt }}</p>
-                <small>{{ post.date }} · {{ post.status }}</small>
+                <small>{{ post.date }} · {{ post.category }}</small>
               </div>
 
               <!-- ACTION BUTTONS -->
@@ -91,9 +91,10 @@
                   Sửa
                 </router-link>
 
+                <!-- Delete button -->
                 <button
                   class="btn btn-sm btn-outline-danger"
-                  @click="deletePost(post.id)"
+                  @click="openDeleteModal(post.id)"
                 >
                   Xóa
                 </button>
@@ -107,36 +108,50 @@
       </div>
     </div>
   </div>
+
+  <!-- Delete Confirmation Modal -->
+  <div
+    class="modal fade"
+    :class="{ show: showDeleteModal }"
+    tabindex="-1"
+    style="display: block"
+    v-if="showDeleteModal"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title">Xác nhận xóa</h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            @click="closeDeleteModal"
+          ></button>
+        </div>
+
+        <div class="modal-body">Bạn có chắc muốn xóa bài viết này không?</div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" @click="closeDeleteModal">
+            Hủy
+          </button>
+          <button class="btn btn-danger" @click="confirmDelete">
+            Xác nhận
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div class="modal-backdrop fade show" v-if="showDeleteModal"></div>
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+// import { ref, reactive } from "vue";
 
-const avatarPreview = ref("https://via.placeholder.com/120");
+// import { onMounted } from "vue";
 
-const form = reactive({
-  username: "Nguyễn Văn A",
-  email: "example@gmail.com",
-  password: "",
-  confirmPassword: "",
-});
-
-const posts = ref([
-  {
-    id: 1,
-    title: "Ngày đầu học Vue.js",
-    excerpt: "Hôm nay mình bắt đầu học Vue và cảm thấy khá là cuốn...",
-    date: "10/01/2026",
-    status: "Public",
-  },
-  {
-    id: 2,
-    title: "Cảm nghĩ về lập trình",
-    excerpt: "Lập trình không khó, quan trọng là không bỏ cuộc...",
-    date: "08/01/2026",
-    status: "Private",
-  },
-]);
+const user = JSON.parse(localStorage.getItem("user"));
 
 const onAvatarChange = (e) => {
   const file = e.target.files[0];
@@ -145,15 +160,98 @@ const onAvatarChange = (e) => {
   }
 };
 
-// fake delete post function
-const deletePost = (id) => {
-  if (!confirm("Bạn có chắc muốn xóa bài viết này không?")) return;
+// Delete Modal Logic
+const showDeleteModal = ref(false);
+const postToDelete = ref(null);
 
-  posts.value = posts.value.filter((p) => p.id !== id);
+const openDeleteModal = (id) => {
+  postToDelete.value = id;
+  showDeleteModal.value = true;
 };
 
-// Here you would typically also make an API call to delete the post from the server
-// await axios.delete(`/api/posts/${id}`);
+const closeDeleteModal = () => {
+  showDeleteModal.value = false;
+  postToDelete.value = null;
+};
+
+const confirmDelete = async () => {
+  if (!postToDelete.value) return;
+
+  try {
+    const res = await fetch(
+      `https://localhost:7181/api/post/${postToDelete.value}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      },
+    );
+
+    if (!res.ok) throw new Error("Delete failed");
+
+    posts.value = posts.value.filter((p) => p.id !== postToDelete.value);
+
+    closeDeleteModal();
+  } catch (err) {
+    alert("Xóa thất bại");
+  }
+};
+
+// Load user info and posts on mount
+import { ref, reactive, onMounted } from "vue";
+
+const avatarPreview = ref("");
+const posts = ref([]);
+
+const form = reactive({
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+
+onMounted(async () => {
+  if (!user || !user.userID) return;
+
+  try {
+    // LOAD USER INFO
+    const userRes = await fetch(
+      `https://localhost:7181/api/auth/${user.userID}`,
+    );
+
+    if (!userRes.ok) throw new Error("User API lỗi");
+
+    const userData = await userRes.json();
+
+    form.username = userData.fullName;
+    form.email = userData.email;
+    avatarPreview.value =
+      userData.avatarUrl || "https://via.placeholder.com/120";
+
+    // LOAD POSTS
+    const postRes = await fetch(
+      `https://localhost:7181/api/post/by-user/${user.userID}`,
+    );
+
+    if (!postRes.ok) throw new Error("Post API lỗi");
+
+    const postData = await postRes.json();
+
+    posts.value = postData.map((p) => ({
+      id: p.postID,
+      title: p.title,
+      excerpt:
+        p.description?.length > 80
+          ? p.description.slice(0, 80) + "..."
+          : p.description,
+      date: new Date(p.postDate).toLocaleDateString(),
+      category: p.category,
+    }));
+  } catch (err) {
+    console.error(err);
+  }
+});
 </script>
 
 <style scoped>
