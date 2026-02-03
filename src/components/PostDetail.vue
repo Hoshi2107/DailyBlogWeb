@@ -26,10 +26,12 @@
         </h5>
 
         <!-- Comment list -->
-        <div v-for="c in comments" :key="c.id" class="border-bottom pb-2 mb-3">
+        <div v-for="c in comments" :key="c.commentID">
           <strong>{{ c.username }}</strong>
-          <small class="text-muted ms-2">{{ c.createdAt }}</small>
-          <p class="mb-1">{{ c.content }}</p>
+          <small class="text-muted ms-2">
+            {{ formatDate(c.commentDate) }}
+          </small>
+          <p>{{ c.commentDetail }}</p>
         </div>
 
         <!-- Add comment -->
@@ -58,6 +60,7 @@ const route = useRoute();
 const post = ref(null);
 const comments = ref([]);
 const newComment = ref("");
+// await loadComments();
 
 onMounted(async () => {
   try {
@@ -74,6 +77,81 @@ const formatDate = (dateStr) => {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
+};
+
+// Load comments on mount
+const loadComments = async () => {
+  const res = await fetch(
+    `https://localhost:7181/api/comment/post/${route.params.id}`,
+  );
+
+  comments.value = await res.json();
+};
+
+// Initial load
+// const addComment = async () => {
+//   if (!newComment.value.trim()) return;
+
+//   const user = JSON.parse(localStorage.getItem("user"));
+//   if (!user) {
+//     alert("Bạn cần đăng nhập để bình luận");
+//     return;
+//   }
+
+//   try {
+//     const res = await fetch("https://localhost:7181/api/comment", {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         commentDetail: newComment.value,
+//         userID: user.userID,
+//         postID: parseInt(route.params.id),
+//       }),
+//     });
+
+//     if (!res.ok) throw new Error();
+
+//     newComment.value = "";
+//     await loadComments();
+//   } catch {
+//     alert("Không thể thêm bình luận");
+//   }
+// };
+const addComment = async () => {
+  if (!newComment.value.trim()) return;
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) {
+    alert("Bạn cần đăng nhập để bình luận");
+    return;
+  }
+
+  try {
+    const res = await fetch("https://localhost:7181/api/comment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        commentDetail: newComment.value,
+        userID: user.userID,
+        postID: parseInt(route.params.id),
+      }),
+    });
+
+    if (!res.ok) {
+      const errText = await res.text();
+      console.log("SERVER ERROR:", errText);
+      throw new Error();
+    }
+
+    newComment.value = "";
+    await loadComments();
+  } catch (err) {
+    alert("Không thể thêm bình luận");
+  }
 };
 </script>
 
