@@ -147,4 +147,23 @@ h1 {
 .container {
   background-color: white;
 }
+
+.card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 20px 40px rgb(0, 0, 0);
+}
+
+.card-title {
+  transition: color 0.3s ease;
+}
+
+.card:hover .card-title {
+  color: #0d6efd; /* màu primary */
+}
 </style>

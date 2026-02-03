@@ -60,53 +60,62 @@
 
       <!-- RIGHT -->
       <div class="col-sm-8">
-        <div class="card shadow-sm">
-          <div class="card-body">
-            <h4 class="mb-4 border-bottom pb-3" id="post-history-title">
-              Bài viết đã đăng
-            </h4>
+        <transition name="fade">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h4 class="mb-4 border-bottom pb-3" id="post-history-title">
+                Bài viết đã đăng
+              </h4>
 
-            <div
-              v-for="post in posts"
-              :key="post.id"
-              class="border-bottom pb-3 mb-3 d-flex justify-content-between align-items-start"
-            >
-              <div>
-                <h5>{{ post.title }}</h5>
-                <p class="text-muted mb-1">{{ post.excerpt }}</p>
-                <small>{{ post.date }} · {{ post.category }}</small>
-              </div>
-
-              <!-- ACTION BUTTONS -->
-              <div class="ms-3 text-nowrap">
-                <router-link
-                  :to="`/posts/${post.id}`"
-                  class="btn btn-sm btn-outline-primary me-2"
+              <!-- <div
+                v-for="post in posts"
+                :key="post.id"
+                class="border-bottom pb-3 mb-3 d-flex justify-content-between align-items-start"
+              > -->
+              <transition-group name="list" tag="div">
+                <div
+                  v-for="post in posts"
+                  :key="post.id"
+                  class="post-item border-bottom pb-3 mb-3 d-flex justify-content-between align-items-start"
                 >
-                  Xem
-                </router-link>
+                  <div>
+                    <h5>{{ post.title }}</h5>
+                    <p class="text-muted mb-1">{{ post.excerpt }}</p>
+                    <small>{{ post.date }} · {{ post.category }}</small>
+                  </div>
 
-                <router-link
-                  :to="`/edit-post/${post.id}`"
-                  class="btn btn-sm btn-outline-warning me-2"
-                >
-                  Sửa
-                </router-link>
+                  <!-- ACTION BUTTONS -->
+                  <div class="ms-3 text-nowrap">
+                    <router-link
+                      :to="`/posts/${post.id}`"
+                      class="btn btn-sm btn-outline-primary me-2"
+                    >
+                      Xem
+                    </router-link>
 
-                <!-- Delete button -->
-                <button
-                  class="btn btn-sm btn-outline-danger"
-                  @click="openDeleteModal(post.id)"
-                >
-                  Xóa
-                </button>
-              </div>
+                    <router-link
+                      :to="`/edit-post/${post.id}`"
+                      class="btn btn-sm btn-outline-warning me-2"
+                    >
+                      Sửa
+                    </router-link>
+
+                    <!-- Delete button -->
+                    <button
+                      class="btn btn-sm btn-outline-danger"
+                      @click="openDeleteModal(post.id)"
+                    >
+                      Xóa
+                    </button>
+                  </div>
+                </div>
+                <p v-if="posts.length === 0" class="text-muted">
+                  Bạn chưa đăng bài viết nào.
+                </p></transition-group
+              >
             </div>
-            <p v-if="posts.length === 0" class="text-muted">
-              Bạn chưa đăng bài viết nào.
-            </p>
           </div>
-        </div>
+        </transition>
       </div>
     </div>
   </div>
@@ -290,5 +299,38 @@ onMounted(async () => {
 
 #post-history-title {
   font-weight: bold;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateX(30px);
+}
+.slide-fade-enter-to {
+  opacity: 1;
+  transform: translateX(0);
+}
+.post-item {
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.post-item:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.4s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
 }
 </style>
