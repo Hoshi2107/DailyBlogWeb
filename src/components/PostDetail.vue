@@ -60,12 +60,14 @@ const route = useRoute();
 const post = ref(null);
 const comments = ref([]);
 const newComment = ref("");
-// await loadComments();
 
+// await loadComments();
 onMounted(async () => {
   try {
     const data = await getPostById(route.params.id);
     post.value = data;
+
+    await loadComments();
   } catch (error) {
     console.error("Lỗi load chi tiết:", error);
   }
@@ -88,37 +90,6 @@ const loadComments = async () => {
   comments.value = await res.json();
 };
 
-// Initial load
-// const addComment = async () => {
-//   if (!newComment.value.trim()) return;
-
-//   const user = JSON.parse(localStorage.getItem("user"));
-//   if (!user) {
-//     alert("Bạn cần đăng nhập để bình luận");
-//     return;
-//   }
-
-//   try {
-//     const res = await fetch("https://localhost:7181/api/comment", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({
-//         commentDetail: newComment.value,
-//         userID: user.userID,
-//         postID: parseInt(route.params.id),
-//       }),
-//     });
-
-//     if (!res.ok) throw new Error();
-
-//     newComment.value = "";
-//     await loadComments();
-//   } catch {
-//     alert("Không thể thêm bình luận");
-//   }
-// };
 const addComment = async () => {
   if (!newComment.value.trim()) return;
 
