@@ -32,11 +32,10 @@
 
 <script setup>
 import { ref, computed } from "vue";
-
-import DashboardView from "./admin/DashboardView.vue";
-import ManageUsers from "./admin/ManageUsers.vue";
-import ManagePosts from "./admin/ManagePosts.vue";
-import ManageComments from "./admin/ManageComments.vue";
+import DashboardView from "./DashboardView.vue";
+import ManageUsers from "./ManageUsers.vue";
+import ManagePosts from "./ManagePosts.vue";
+import ManageComments from "./ManageComments.vue";
 
 const activeTab = ref("dashboard");
 
@@ -61,7 +60,7 @@ const navClass = (tab) => {
 <style scoped>
 .admin-container {
   display: flex;
-  height: 100vh;
+  height: 100%;
 }
 
 .sidebar {

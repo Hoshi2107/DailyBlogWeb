@@ -6,6 +6,11 @@ import Register from "../components/Register.vue";
 import EditPost from "../components/EditPost.vue";
 import NewPost from "../components/NewPost.vue";
 import PostDetail from "../components/PostDetail.vue";
+import AdminLayout from "../components/admin/AdminLayout.vue";
+import DashboardView from "../components/admin/DashboardView.vue";
+import ManageComments from "../components/admin/ManageComments.vue";
+import ManagePosts from "../components/admin/ManagePosts.vue";
+import ManageUsers from "../components/admin/ManageUsers.vue";
 
 const routes = [
   {
@@ -46,6 +51,10 @@ const routes = [
     scrollBehavior() {
       return { top: 0 };
     },
+  },
+  {
+    path: "/dashboard",
+    component: () => import("../components/admin/AdminLayout.vue"),
   },
 ];
 
