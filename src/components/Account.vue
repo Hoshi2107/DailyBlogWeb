@@ -165,6 +165,40 @@
 const user = JSON.parse(localStorage.getItem("user"));
 
 // Avatar Upload Logic
+// const saveChanges = async () => {
+//   if (form.password !== form.confirmPassword) {
+//     alert("Mật khẩu không khớp");
+//     return;
+//   }
+
+//   try {
+//     const res = await fetch(`https://localhost:7181/api/user/${user.userID}`, {
+//       method: "PUT",
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: `Bearer ${localStorage.getItem("token")}`,
+//       },
+//       body: JSON.stringify({
+//         fullName: form.username,
+//         email: form.email,
+//         password: form.password,
+//         avatarUrl: avatarPreview.value,
+//       }),
+//     });
+
+//     const text = await res.text();
+//     console.log("STATUS:", res.status);
+//     console.log("RESPONSE:", text);
+
+//     if (!res.ok) throw new Error(text);
+
+//     alert("Cập nhật thành công");
+//   } catch (err) {
+//     console.error("FULL ERROR:", err);
+//     alert("Cập nhật thất bại");
+//   }
+// };
+
 const saveChanges = async () => {
   if (form.password !== form.confirmPassword) {
     alert("Mật khẩu không khớp");
@@ -172,6 +206,28 @@ const saveChanges = async () => {
   }
 
   try {
+    let avatarUrl = avatarPreview.value;
+
+    // 1️⃣ Nếu có chọn file mới → upload trước
+    if (selectedFile.value) {
+      const formData = new FormData();
+      formData.append("file", selectedFile.value);
+
+      const uploadRes = await fetch(
+        "https://localhost:7181/api/user/upload-avatar",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+
+      if (!uploadRes.ok) throw new Error("Upload avatar failed");
+
+      const uploadData = await uploadRes.json();
+      avatarUrl = uploadData.avatarUrl; // lấy url backend trả về
+    }
+
+    // 2️⃣ Update user info
     const res = await fetch(`https://localhost:7181/api/user/${user.userID}`, {
       method: "PUT",
       headers: {
@@ -182,19 +238,15 @@ const saveChanges = async () => {
         fullName: form.username,
         email: form.email,
         password: form.password,
-        avatarUrl: avatarPreview.value,
+        avatarUrl: avatarUrl,
       }),
     });
 
-    const text = await res.text();
-    console.log("STATUS:", res.status);
-    console.log("RESPONSE:", text);
-
-    if (!res.ok) throw new Error(text);
+    if (!res.ok) throw new Error("Update failed");
 
     alert("Cập nhật thành công");
   } catch (err) {
-    console.error("FULL ERROR:", err);
+    console.error(err);
     alert("Cập nhật thất bại");
   }
 };
@@ -290,6 +342,17 @@ onMounted(async () => {
     console.error(err);
   }
 });
+
+// Avatar Change Handler
+const selectedFile = ref(null);
+
+const onAvatarChange = (e) => {
+  selectedFile.value = e.target.files[0];
+
+  if (selectedFile.value) {
+    avatarPreview.value = URL.createObjectURL(selectedFile.value);
+  }
+};
 </script>
 
 <style scoped>
