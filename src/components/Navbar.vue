@@ -80,6 +80,12 @@
               class="dropdown-menu dropdown-menu-end"
               :class="{ show: showDropdown }"
             >
+              <!-- just for admin -->
+              <li v-if="isAdmin">
+                <router-link class="dropdown-item" to="/dashboard">
+                  Dashboard
+                </router-link>
+              </li>
               <li>
                 <router-link class="dropdown-item" to="/account">
                   Tài khoản
@@ -130,6 +136,12 @@ const logout = () => {
   user.value = null;
   router.push("/login");
 };
+
+//check admin
+import { computed } from "vue";
+const isAdmin = computed(() => {
+  return user.value && user.value.roleID === 1;
+});
 
 //search post
 const keyword = ref("");
