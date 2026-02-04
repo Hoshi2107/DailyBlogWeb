@@ -3,10 +3,20 @@ import DailyBlogHomePage from "./components/DailyBlogHomePage.vue";
 import router from "./router";
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
+import { ref } from "vue";
+
+const searchKeyword = ref("");
+
+const handleSearch = (keyword) => {
+  searchKeyword.value = keyword;
+};
 </script>
 
 <template>
-  <Navbar />
+  <!-- <Navbar /> -->
+  <Navbar @search="handleSearch" />
+  <router-view :searchKeyword="searchKeyword" />
+
   <!-- <div>
     <a href="https://vite.dev" target="_blank">
       <img src="/vite.svg" class="logo" alt="Vite logo" />
@@ -17,7 +27,7 @@ import Footer from "./components/Footer.vue";
   </div> -->
   <!-- <HelloWorld msg="Vite + Vue" /> -->
   <!-- <div class="main-app"> -->
-  <router-view></router-view>
+  <!-- <router-view></router-view> -->
   <!-- </div> -->
   <Footer />
 </template>

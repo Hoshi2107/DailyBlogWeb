@@ -75,14 +75,7 @@
 
 <script setup>
 import Carousel from "./Carousel.vue";
-// import Navbar from "./Navbar.vue";
 import { useRoute } from "vue-router";
-// import { computed, ref } from "vue";
-
-// const route = useRoute();
-// const router = useRouter();
-
-// const postsPerPage = 9;
 
 // Take data from postService
 import { ref, onMounted, computed } from "vue";
@@ -99,31 +92,50 @@ onMounted(async () => {
 });
 
 //search post
-// const filteredPosts = computed(() => {
-//   const q = route.query.search;
+import { watch } from "vue";
 
-//   if (!q || !q.trim()) {
-//     return latestPosts.value;
-//   }
+const props = defineProps({
+  searchKeyword: String,
+});
 
-//   const keyword = q.toLowerCase();
+watch(
+  () => props.searchKeyword,
+  () => {
+    currentPage.value = 1;
+  },
+);
 
-//   return latestPosts.value.filter(
-//     (p) =>
-//       p.title.toLowerCase().includes(keyword) ||
-//       p.excerpt.toLowerCase().includes(keyword)
-//   );
-// });
+const filteredPosts = computed(() => {
+  if (!props.searchKeyword || !props.searchKeyword.trim()) {
+    return posts.value;
+  }
+
+  const keyword = props.searchKeyword.toLowerCase();
+
+  return posts.value.filter(
+    (p) =>
+      p.title.toLowerCase().includes(keyword) ||
+      p.description.toLowerCase().includes(keyword),
+  );
+});
 
 // pagination
 const postsPerPage = 9;
 const currentPage = ref(1);
 
-const totalPages = computed(() => Math.ceil(posts.value.length / postsPerPage));
+// const totalPages = computed(() => Math.ceil(posts.value.length / postsPerPage));
+
+// const paginatedPosts = computed(() => {
+//   const start = (currentPage.value - 1) * postsPerPage;
+//   return posts.value.slice(start, start + postsPerPage);
+// });
+const totalPages = computed(() =>
+  Math.ceil(filteredPosts.value.length / postsPerPage),
+);
 
 const paginatedPosts = computed(() => {
   const start = (currentPage.value - 1) * postsPerPage;
-  return posts.value.slice(start, start + postsPerPage);
+  return filteredPosts.value.slice(start, start + postsPerPage);
 });
 
 const changePage = (page) => {
@@ -164,6 +176,6 @@ h1 {
 }
 
 .card:hover .card-title {
-  color: #0d6efd; /* màu primary */
+  color: #0d6efd;
 }
 </style>

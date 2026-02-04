@@ -107,7 +107,6 @@
 <script setup>
 import blogicon from "../imgs/blogicon.png";
 
-//fake login
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -144,17 +143,16 @@ const isAdmin = computed(() => {
 });
 
 //search post
+
 const keyword = ref("");
 
-const handleSearch = () => {
-  if (!keyword.value.trim()) return;
+const emit = defineEmits(["search"]);
 
-  router.push({
-    path: "/home",
-    query: { search: keyword.value },
-  });
+const handleSearch = () => {
+  emit("search", keyword.value);
 };
 
+//Show dropdown
 const showDropdown = ref(false);
 
 const toggleDropdown = () => {
