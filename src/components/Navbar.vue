@@ -1,8 +1,11 @@
 <template>
-  <nav class="navbar navbar-expand-md navbar-light bg-primary bg-gradient">
+  <nav
+    class="navbar navbar-expand-md navbar-light bg-gradient"
+    style="background-color: #3bc1a8"
+  >
     <div class="container-fluid px-4">
       <router-link class="navbar-brand fw-bold" to="/">
-        <img :src="blogicon" alt="error" class="img" />
+        <img :src="icon" alt="error" class="img" />
       </router-link>
 
       <div class="navbar-brand">Daily Blog</div>
@@ -106,6 +109,7 @@
 
 <script setup>
 import blogicon from "../imgs/blogicon.png";
+import icon from "../imgs/icon.png";
 
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -167,8 +171,8 @@ watch(user, () => {
 
 <style scoped>
 .img {
-  width: 70px;
-  height: 70px;
+  width: 150px;
+  height: 90px;
   margin-left: 20px;
   margin-right: 8px;
   margin-top: 0px;
