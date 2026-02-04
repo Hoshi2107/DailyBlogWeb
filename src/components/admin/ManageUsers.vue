@@ -32,6 +32,15 @@
                 </span>
               </td>
 
+              <td>
+                <span
+                  class="badge"
+                  :class="user.isActive ? 'bg-success' : 'bg-secondary'"
+                >
+                  {{ user.isActive ? "Hoạt động" : "Bị vô hiệu hóa" }}
+                </span>
+              </td>
+
               <td class="text-center">
                 <button
                   class="btn btn-sm me-2"
@@ -40,14 +49,6 @@
                 >
                   {{ user.isActive ? "Vô hiệu hóa" : "Kích hoạt" }}
                 </button>
-              </td>
-              <td>
-                <span
-                  class="badge"
-                  :class="user.isActive ? 'bg-success' : 'bg-secondary'"
-                >
-                  {{ user.isActive ? "Hoạt động" : "Bị vô hiệu hóa" }}
-                </span>
               </td>
             </tr>
 
