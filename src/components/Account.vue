@@ -206,7 +206,8 @@ const saveChanges = async () => {
   }
 
   try {
-    let avatarUrl = avatarPreview.value;
+    // let avatarUrl = avatarPreview.value;
+    let avatarUrl = null;
 
     // 1️⃣ Nếu có chọn file mới → upload trước
     if (selectedFile.value) {
@@ -228,6 +229,21 @@ const saveChanges = async () => {
     }
 
     // 2️⃣ Update user info
+    // const res = await fetch(`https://localhost:7181/api/user/${user.userID}`, {
+    //   method: "PUT",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //   },
+    //   body: JSON.stringify({
+    //     fullName: form.username,
+    //     email: form.email,
+    //     password: form.password,
+    //     avatarUrl: avatarUrl,
+    //   }),
+    // });
+
+    // if (!res.ok) throw new Error("Update failed");
     const res = await fetch(`https://localhost:7181/api/user/${user.userID}`, {
       method: "PUT",
       headers: {
@@ -241,6 +257,9 @@ const saveChanges = async () => {
         avatarUrl: avatarUrl,
       }),
     });
+
+    console.log("STATUS:", res.status);
+    console.log("RESPONSE:", await res.text());
 
     if (!res.ok) throw new Error("Update failed");
 
